@@ -36,21 +36,21 @@ import { ngxHrefModule, ngxHrefService } from 'ngx-href'
 
   imports: [
     /** Default
-     * behavior="smooth"
-     * defaultOffset="30"
-     * navbarOffset="60"
-     * rel="noopener"
-     * target="_blank"
+     * behavior="auto"
+     * defaultOffset="0"
+     * navbarOffset="0"
+     * rel=undefined
+     * target="_self"
      **/ 
     ngxHrefModule.forRoot({}), 
 
     // Or
     ngxHrefModule.forRoot({
-      behavior:"instant",
+      behavior:"smooth",
       defaultOffset:"30",
       navbarOffset:"60",
       rel:"noopener nofollow",
-      target:"_self",
+      target:"_blank",
     }),
   ],
 ```
@@ -60,7 +60,7 @@ Nothing to do it should work out of the box
 
 ## Scroll logic
 ### Behavior
-**Default:** `"smooth"`  
+**Default:** `"auto"`  
 **Accepted value:** `ScrollBehavior`  // ("auto" | "instant" | "smooth")  
 
 Can also be passed individually directly through html
@@ -71,14 +71,14 @@ Can also be passed individually directly through html
 ### defaultOffset
 The standard offset to be added to your website `scrollTo` logic
 
-**Default:** `30`  
+**Default:** `0`  
 **Accepted value:** `number`  
 Together with the `navbarOffset` will be the total offset for the scroll.
 
 ### navbarOffset
 An additional offset calculated base on your navbar height
 
-**Default:** `60`
+**Default:** `0`
 **Accepted value:** `number`
 Together with the `defaultOffset` will be the total offset for the scroll.
 
@@ -105,7 +105,7 @@ ngAfterContentInit(): void {
 
 ## External link
 ### Rel attribute 
-**Default:** `"noopener"`  
+**Default:** `undefined`  
 **Accepted value:** [string](https://developer.mozilla.org/fr/docs/Web/HTML/Attributes/rel)
 
 Can also be passed individually directly through html
@@ -114,12 +114,12 @@ Can also be passed individually directly through html
 ```
 
 ### Target attribute 
-**Default:** `"_blank"`  
+**Default:** `"_self"`  
 **Accepted value:** [string](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/a#target)
 
 Can also be passed individually directly through html
 ```html
-<a href="https://my-external-url.com" target="_self">
+<a href="https://my-external-url.com" target="_blank">
 ```
 
 ### target attribute

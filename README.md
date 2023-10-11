@@ -6,6 +6,7 @@ A library that allows href to understand Angular's router while retaining its de
 1. Use `router.navigate()` for [internal link](#angular-routing)
 2. Support scroll with the `#` attributes and let you configure the [scrolling logic](#scroll-logic)
 3. Automatically append `rel="nooepener"` & `target="_blank"` to external link [if wished so](#installation)
+4. Support using `href` with the html `button` [attribute](#directive)
 
 - [@ngx-href ](#ngx-href-)
   - [Installation](#installation)
@@ -35,21 +36,21 @@ import { ngxHrefModule, ngxHrefService } from 'ngx-href'
 
   imports: [
     /** Default
-     * behavior="smooth"
-     * defaultOffset="30"
-     * navbarOffset="60"
-     * rel="noopener"
-     * target="_blank"
+     * behavior="auto"
+     * defaultOffset="0"
+     * navbarOffset="0"
+     * rel=undefined
+     * target="_self"
      **/ 
     ngxHrefModule.forRoot({}), 
 
     // Or
     ngxHrefModule.forRoot({
-      behavior:"instant",
+      behavior:"smooth",
       defaultOffset:"30",
       navbarOffset:"60",
       rel:"noopener nofollow",
-      target:"_self",
+      target:"_blank",
     }),
   ],
 ```
@@ -59,7 +60,7 @@ Nothing to do it should work out of the box
 
 ## Scroll logic
 ### Behavior
-**Default:** `"smooth"`  
+**Default:** `"auto"`  
 **Accepted value:** `ScrollBehavior`  // ("auto" | "instant" | "smooth")  
 
 Can also be passed individually directly through html
@@ -70,14 +71,14 @@ Can also be passed individually directly through html
 ### defaultOffset
 The standard offset to be added to your website `scrollTo` logic
 
-**Default:** `30`  
+**Default:** `0`  
 **Accepted value:** `number`  
 Together with the `navbarOffset` will be the total offset for the scroll.
 
 ### navbarOffset
 An additional offset calculated base on your navbar height
 
-**Default:** `60`
+**Default:** `0`
 **Accepted value:** `number`
 Together with the `defaultOffset` will be the total offset for the scroll.
 
@@ -104,7 +105,7 @@ ngAfterContentInit(): void {
 
 ## External link
 ### Rel attribute 
-**Default:** `"noopener"`  
+**Default:** `undefined`  
 **Accepted value:** [string](https://developer.mozilla.org/fr/docs/Web/HTML/Attributes/rel)
 
 Can also be passed individually directly through html
@@ -113,12 +114,12 @@ Can also be passed individually directly through html
 ```
 
 ### Target attribute 
-**Default:** `"_blank"`  
+**Default:** `"_self"`  
 **Accepted value:** [string](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/a#target)
 
 Can also be passed individually directly through html
 ```html
-<a href="https://my-external-url.com" target="_self">
+<a href="https://my-external-url.com" target="_blank">
 ```
 
 ### target attribute
@@ -144,6 +145,12 @@ Normal use
 <a href="/angular/router/link">
   My internal link
 </a>
+
+<!-- Or with a button -->
+<button href="/angular/router/link">
+  My internal link
+</button>
+
 
 <!-- External link -->
 <a href="https://external-url.com">

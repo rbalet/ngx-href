@@ -46,7 +46,8 @@ export class NgxHrefDirective {
     return this.hrefAttr?.startsWith('http') ? true : false
   }
   private _prepareOpenLink() {
-    if (!this.relAttr) this.relAttr = this._ngxHrefService.defaultRelAttr
+    if (!this.relAttr && this._ngxHrefService.defaultRelAttr)
+      this.relAttr = this._ngxHrefService.defaultRelAttr
     if (!this.targetAttr) this.targetAttr = this._ngxHrefService.defaultTargetAttr
 
     this._elementRef.nativeElement.addEventListener('click', (event: PointerEvent) => {

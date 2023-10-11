@@ -12,17 +12,17 @@ export class NgxHrefService {
   behavior!: ScrollBehavior
   defaultOffset!: number
   navbarOffset!: number
-  defaultRelAttr!: string
+  defaultRelAttr?: string
   defaultTargetAttr!: string
 
   private _actualAnchor = ''
 
   constructor(@Inject(NgxHrefServiceProvider) _config: NgxHrefServiceConfig) {
-    this.behavior = _config.behavior || 'smooth'
-    this.defaultOffset = typeof _config.defaultOffset === 'number' ? _config.defaultOffset : 30
-    this.navbarOffset = typeof _config.navbarOffset === 'number' ? _config.navbarOffset : 60
-    this.defaultRelAttr = _config.defaultRelAttr || 'noopener'
-    this.defaultTargetAttr = _config.defaultTargetAttr || '_blank'
+    this.behavior = _config.behavior || 'auto'
+    this.defaultOffset = typeof _config.defaultOffset === 'number' ? _config.defaultOffset : 0
+    this.navbarOffset = typeof _config.navbarOffset === 'number' ? _config.navbarOffset : 0
+    this.defaultRelAttr = _config.defaultRelAttr
+    this.defaultTargetAttr = _config.defaultTargetAttr || '_self'
   }
 
   scrollTo(anchor?: string, counter = 0) {
