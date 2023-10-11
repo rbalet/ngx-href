@@ -6,6 +6,7 @@ A library that allows href to understand Angular's router while retaining its de
 1. Use `router.navigate()` for [internal link](#angular-routing)
 2. Support scroll with the `#` attributes and let you configure the [scrolling logic](#scroll-logic)
 3. Automatically append `rel="nooepener"` & `target="_blank"` to external link [if wished so](#installation)
+4. Support using `href` with the html `button` [attribute](#directive)
 
 - [@ngx-href ](#ngx-href-)
   - [Installation](#installation)
@@ -144,6 +145,12 @@ Normal use
 <a href="/angular/router/link">
   My internal link
 </a>
+
+<!-- Or with a button -->
+<button href="/angular/router/link">
+  My internal link
+</button>
+
 
 <!-- External link -->
 <a href="https://external-url.com">
