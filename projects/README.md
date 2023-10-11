@@ -1,8 +1,8 @@
 # @ngx-href [![npm version](https://img.shields.io/npm/v/ngx-href.svg)](https://www.npmjs.com/package/ngx-href)
+A library that allows href to understand Angular's router while retaining its default functionality.
 
 [![BuyMeACoffee](https://www.buymeacoffee.com/assets/img/custom_images/purple_img.png)](https://www.buymeacoffee.com/widness)
 
-A library that allows href to understand Angular's router while retaining its default functionality.
 1. Use `router.navigate()` for [internal link](#angular-routing)
 2. Support scroll with the `#` attributes and let you configure the [scrolling logic](#scroll-logic)
 3. Automatically append `rel="nooepener"` & `target="_blank"` to external link [if wished so](#installation)
