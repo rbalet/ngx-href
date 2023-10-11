@@ -1,0 +1,30 @@
+{
+  "name": "ngx-href",
+  "version": "16.0.0",
+  "license": "MIT",
+  "author": "Raphael Balet",
+  "maintainers": [
+    "raphael.balet@outlook.com"
+  ],
+  "keywords": [
+    "angular",
+    "back",
+    "button",
+    "directive"
+  ],
+  "homepage": "https://github.com/rbalet/ngx-href#readme",
+  "bugs": {
+    "url": "https://github.com/rbalet/ngx-href/issues"
+  },
+  "repository": {
+    "url": "https://github.com/rbalet/ngx-href"
+  },
+  "dependencies": {
+    "tslib": "^2.6.2"
+  },
+  "peerDependencies": {
+    "@angular/common": ">=15.2.0",
+    "@angular/core": ">=15.2.0"
+  },
+  "sideEffects": false
+}

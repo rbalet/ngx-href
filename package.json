@@ -1,0 +1,57 @@
+{
+  "name": "ngx-href",
+  "version": "16.0.0",
+  "license": "MIT",
+  "author": "Raphael Balet",
+  "maintainers": [
+    "raphael.balet@outlook.com"
+  ],
+  "keywords": [
+    "angular",
+    "ngx",
+    "href",
+    "directive"
+  ],
+  "homepage": "https://github.com/rbalet/ngx-href#readme",
+  "bugs": {
+    "url": "https://github.com/rbalet/ngx-href/issues"
+  },
+  "repository": {
+    "url": "https://github.com/rbalet/ngx-href"
+  },
+  "scripts": {
+    "ng": "ng",
+    "start": "ng serve",
+    "build": "ng build",
+    "watch": "ng build --watch --configuration development",
+    "test": "ng test",
+    "publish": "ng build ngx-href --configuration production && npm publish ./dist/ngx-href"
+  },
+  "dependencies": {
+    "@angular/animations": "^16.2.8",
+    "@angular/common": "^16.2.8",
+    "@angular/compiler": "^16.2.8",
+    "@angular/core": "^16.2.8",
+    "@angular/forms": "^16.2.8",
+    "@angular/platform-browser": "^16.2.8",
+    "@angular/platform-browser-dynamic": "^16.2.8",
+    "@angular/router": "^16.2.8",
+    "rxjs": "~7.8.1",
+    "tslib": "^2.6.2",
+    "zone.js": "~0.13.0"
+  },
+  "devDependencies": {
+    "@angular-devkit/build-angular": "^16.2.6",
+    "@angular/cli": "~16.0.6",
+    "@angular/compiler-cli": "^16.2.8",
+    "@types/jasmine": "~4.3.6",
+    "jasmine-core": "~4.5.0",
+    "karma": "~6.4.2",
+    "karma-chrome-launcher": "~3.2.0",
+    "karma-coverage": "~2.2.1",
+    "karma-jasmine": "~5.1.0",
+    "karma-jasmine-html-reporter": "~2.1.0",
+    "ng-packagr": "^16.0.1",
+    "typescript": "~5.0.4"
+  }
+}
