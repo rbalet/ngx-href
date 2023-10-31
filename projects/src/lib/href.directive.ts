@@ -42,7 +42,7 @@ export class NgxHrefDirective {
 
   private _isLinkMailOrPhone(): boolean {
     if (this.hrefAttr?.startsWith('mailto') || this.hrefAttr?.startsWith('tel')) {
-      if (this.tagName === 'BUTTON') this._prepareOpenLink()
+      if (this.tagName !== 'A') this._prepareOpenLink()
       return true
     }
 
