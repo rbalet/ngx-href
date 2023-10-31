@@ -7,6 +7,8 @@ import { NgxHrefService } from './href.service'
   selector: 'a[href], button[href]',
 })
 export class NgxHrefDirective {
+  tagName: 'BUTTON' | 'A' = this._elementRef.nativeElement.tagName
+
   @HostBinding('attr.rel') relAttr?: string
   @HostBinding('attr.target') targetAttr?: string
   @HostBinding('attr.href') hrefAttr: string | null = ''
@@ -39,7 +41,12 @@ export class NgxHrefDirective {
   ) {}
 
   private _isLinkMailOrPhone(): boolean {
-    return this.hrefAttr?.startsWith('mailto') || this.hrefAttr?.startsWith('tel') ? true : false
+    if (this.hrefAttr?.startsWith('mailto') || this.hrefAttr?.startsWith('tel')) {
+      if (this.tagName === 'BUTTON') this._prepareOpenLink()
+      return true
+    }
+
+    return false
   }
 
   private _isLinkExternal(): boolean {
