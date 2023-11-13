@@ -9,6 +9,7 @@ A library that allows href to understand Angular's router while retaining its de
 - [@ngx-href ](#ngx-href-)
   - [Installation](#installation)
   - [Angular routing](#angular-routing)
+  - [Avoid Spam](#avoid-spam)
   - [Scroll logic](#scroll-logic)
     - [Behavior](#behavior)
     - [defaultOffset](#defaultoffset)
@@ -34,6 +35,7 @@ import { ngxHrefModule, ngxHrefService } from 'ngx-href'
 
   imports: [
     /** Default
+     * avoidSpam="false"
      * behavior="auto"
      * defaultOffset="0"
      * navbarOffset="0"
@@ -44,6 +46,7 @@ import { ngxHrefModule, ngxHrefService } from 'ngx-href'
 
     // Or
     ngxHrefModule.forRoot({
+      avoidSpam: true,
       behavior:"smooth",
       defaultOffset:"30",
       navbarOffset:"60",
@@ -55,6 +58,10 @@ import { ngxHrefModule, ngxHrefService } from 'ngx-href'
 
 ## Angular routing
 Nothing to do it should work out of the box
+
+## Avoid Spam
+1. Change the `href` from the DOM from `example@outlook.com` into `example(at)outlook.com` 
+2. Let js handle the click event.   
 
 ## Scroll logic
 ### Behavior

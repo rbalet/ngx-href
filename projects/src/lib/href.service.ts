@@ -9,6 +9,7 @@ import { NgxHrefServiceConfig } from './href.interface'
 export class NgxHrefService {
   anchor$: BehaviorSubject<string | null> = new BehaviorSubject<string | null>(null)
 
+  avoidSpam?: boolean
   behavior!: ScrollBehavior
   defaultOffset!: number
   navbarOffset!: number
@@ -18,6 +19,7 @@ export class NgxHrefService {
   private _actualAnchor = ''
 
   constructor(@Inject(NgxHrefServiceProvider) _config: NgxHrefServiceConfig) {
+    this.avoidSpam = _config.avoidSpam
     this.behavior = _config.behavior || 'auto'
     this.defaultOffset = typeof _config.defaultOffset === 'number' ? _config.defaultOffset : 0
     this.navbarOffset = typeof _config.navbarOffset === 'number' ? _config.navbarOffset : 0

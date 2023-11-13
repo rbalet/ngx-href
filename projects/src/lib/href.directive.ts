@@ -1,4 +1,4 @@
-import { Directive, ElementRef, HostBinding, Input } from '@angular/core'
+import { Directive, ElementRef, HostBinding, Input, OnDestroy } from '@angular/core'
 import { Router } from '@angular/router'
 import { NgxHrefService } from './href.service'
 
@@ -6,7 +6,7 @@ import { NgxHrefService } from './href.service'
   standalone: true,
   selector: 'a[href], button[href]',
 })
-export class NgxHrefDirective {
+export class NgxHrefDirective implements OnDestroy {
   tagName: 'BUTTON' | 'A' = this._elementRef.nativeElement.tagName
 
   @HostBinding('attr.rel') relAttr?: string
@@ -34,6 +34,10 @@ export class NgxHrefDirective {
     }
   }
 
+  private _hrefAttr?: string // spam protection
+  private _mouseenterListener: any = null // EventListener | null
+  private _clickListener: any = null // EventListener | null
+
   constructor(
     private _elementRef: ElementRef,
     private _router: Router,
@@ -42,6 +46,20 @@ export class NgxHrefDirective {
 
   private _isLinkMailOrPhone(): boolean {
     if (this.hrefAttr?.startsWith('mailto') || this.hrefAttr?.startsWith('tel')) {
+      if (this._ngxHrefService.avoidSpam) {
+        this._hrefAttr = this.hrefAttr
+
+        if (this.hrefAttr?.startsWith('mailto'))
+          this.hrefAttr = this.hrefAttr.replace('mailto:', '').split('@').join('(at)')
+        else this.hrefAttr = this.hrefAttr.replace('tel:', '')
+
+        this._mouseenterListener = () => {
+          if (this._hrefAttr) this.hrefAttr = this._hrefAttr
+        }
+
+        this._elementRef.nativeElement.addEventListener('mouseenter', this._mouseenterListener)
+      }
+
       if (this.tagName !== 'A') this._prepareOpenLink()
       return true
     }
@@ -57,11 +75,14 @@ export class NgxHrefDirective {
       this.relAttr = this._ngxHrefService.defaultRelAttr
     if (!this.targetAttr) this.targetAttr = this._ngxHrefService.defaultTargetAttr
 
-    this._elementRef.nativeElement.addEventListener('click', (event: PointerEvent) => {
+    this._clickListener = (event: PointerEvent) => {
       event.preventDefault()
 
-      if (this.hrefAttr) window.open(this.hrefAttr, this.targetAttr, this.relAttr)
-    })
+      const hrefAttr = this._hrefAttr || this.hrefAttr
+      if (hrefAttr) window.open(hrefAttr, this.targetAttr, this.relAttr)
+    }
+
+    this._elementRef.nativeElement.addEventListener('click', this._clickListener)
   }
 
   private _isSamePageLink(): boolean {
@@ -69,15 +90,17 @@ export class NgxHrefDirective {
   }
 
   private _prepareScrollToLink() {
-    this._elementRef.nativeElement.addEventListener('click', (event: PointerEvent) => {
+    this._clickListener = (event: PointerEvent) => {
       event.preventDefault()
 
       if (this.hrefAttr) this._ngxHrefService.scrollTo(this.hrefAttr.substring(1))
-    })
+    }
+
+    this._elementRef.nativeElement.addEventListener('click', this._clickListener)
   }
 
   private _prepareRouteToClick() {
-    this._elementRef.nativeElement.addEventListener('click', (event: PointerEvent) => {
+    this._clickListener = (event: PointerEvent) => {
       event.preventDefault()
 
       if (!this.hrefAttr) return
@@ -91,6 +114,16 @@ export class NgxHrefDirective {
       } else {
         this._router.navigate([fragments[0]])
       }
-    })
+    }
+
+    this._elementRef.nativeElement.addEventListener('click', this._clickListener)
+  }
+
+  ngOnDestroy(): void {
+    if (this._mouseenterListener)
+      this._elementRef.nativeElement.removeEventListener('mouseenter', this._mouseenterListener)
+
+    if (this._clickListener)
+      this._elementRef.nativeElement.removeEventListener('click', this._clickListener)
   }
 }
