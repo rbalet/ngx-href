@@ -1,4 +1,4 @@
-import { Directive, ElementRef, HostBinding, Input, OnDestroy } from '@angular/core'
+import { Directive, ElementRef, HostBinding, HostListener, Input, OnDestroy } from '@angular/core'
 import { Router } from '@angular/router'
 import { NgxHrefService } from './href.service'
 
@@ -12,6 +12,23 @@ export class NgxHrefDirective implements OnDestroy {
   @HostBinding('attr.rel') relAttr?: string
   @HostBinding('attr.target') targetAttr?: string
   @HostBinding('attr.href') hrefAttr: string | null = ''
+
+  @HostListener('click', ['$event']) onClick(event: PointerEvent) {
+    if (!this.hrefAttr || !this._routeOnClick) return
+
+    event.preventDefault()
+
+    const fragments = this.hrefAttr.split('#')
+
+    if (fragments.length >= 2) {
+      const urlFragments = this._router.url.split('#')
+      if (fragments[0] === urlFragments[0]) this._ngxHrefService.scrollTo(fragments[1])
+      else this._router.navigate([fragments[0]], { fragment: decodeURI(fragments[1]) })
+    } else {
+      this._router.navigate([fragments[0]])
+    }
+  }
+
   @Input() set rel(value: string) {
     this.relAttr = value
   }
@@ -30,13 +47,14 @@ export class NgxHrefDirective implements OnDestroy {
     } else if (this._isSamePageLink()) {
       this._prepareScrollToLink()
     } else {
-      this._prepareRouteToClick()
+      this._routeOnClick = true
     }
   }
 
   private _hrefAttr?: string // spam protection
   private _mouseenterListener: any = null // EventListener | null
   private _clickListener: any = null // EventListener | null
+  private _routeOnClick = false
 
   constructor(
     private _elementRef: ElementRef,
@@ -99,31 +117,8 @@ export class NgxHrefDirective implements OnDestroy {
     this._elementRef.nativeElement.addEventListener('click', this._clickListener)
   }
 
-  private _prepareRouteToClick() {
-    this._clickListener = (event: PointerEvent) => {
-      event.preventDefault()
-
-      if (!this.hrefAttr) return
-
-      const fragments = this.hrefAttr.split('#')
-      const urlFragments = this._router.url.split('#')
-
-      if (fragments.length >= 2) {
-        if (fragments[0] === urlFragments[0]) this._ngxHrefService.scrollTo(fragments[1])
-        else this._router.navigate([fragments[0]], { fragment: decodeURI(fragments[1]) })
-      } else {
-        this._router.navigate([fragments[0]])
-      }
-    }
-
-    this._elementRef.nativeElement.addEventListener('click', this._clickListener)
-  }
-
   ngOnDestroy(): void {
     if (this._mouseenterListener)
       this._elementRef.nativeElement.removeEventListener('mouseenter', this._mouseenterListener)
-
-    if (this._clickListener)
-      this._elementRef.nativeElement.removeEventListener('click', this._clickListener)
   }
 }
