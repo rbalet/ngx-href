@@ -7,7 +7,7 @@ import { NgxHrefService } from './href.service'
   selector: 'a[href], button[href]',
 })
 export class NgxHrefDirective implements OnDestroy {
-  tagName: 'BUTTON' | 'A' = this._elementRef.nativeElement.tagName
+  private _tagName: 'BUTTON' | 'A' = this._elementRef.nativeElement.tagName
 
   @HostBinding('attr.rel') relAttr?: string
   @HostBinding('attr.target') targetAttr?: string
@@ -22,8 +22,13 @@ export class NgxHrefDirective implements OnDestroy {
 
     if (fragments.length >= 2) {
       const urlFragments = this._router.url.split('#')
+
       if (fragments[0] === urlFragments[0]) this._ngxHrefService.scrollTo(fragments[1])
-      else this._router.navigate([fragments[0]], { fragment: decodeURI(fragments[1]) })
+      else {
+        this._router.navigate([fragments[0]], { fragment: decodeURI(fragments[1]) }).then(() => {
+          this._ngxHrefService.scrollTo(fragments[1])
+        })
+      }
     } else {
       this._router.navigate([fragments[0]])
     }
@@ -31,6 +36,9 @@ export class NgxHrefDirective implements OnDestroy {
 
   @Input() set rel(value: string) {
     this.relAttr = value
+  }
+  @Input() set target(value: string) {
+    this.targetAttr = value
   }
   @Input() set href(value: string) {
     if (!value) {
@@ -78,7 +86,7 @@ export class NgxHrefDirective implements OnDestroy {
         this._elementRef.nativeElement.addEventListener('mouseenter', this._mouseenterListener)
       }
 
-      if (this.tagName !== 'A') this._prepareOpenLink()
+      if (this._tagName !== 'A') this._prepareOpenLink()
       return true
     }
 

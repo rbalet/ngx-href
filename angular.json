@@ -5,21 +5,21 @@
   "projects": {
     "ngx-href": {
       "projectType": "library",
-      "root": "projects",
-      "sourceRoot": "projects/src",
+      "root": "projects/ngx-href",
+      "sourceRoot": "projects/ngx-href/src",
       "prefix": "lib",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:ng-packagr",
           "options": {
-            "project": "projects/ng-package.json"
+            "project": "projects/ngx-href/ng-package.json"
           },
           "configurations": {
             "production": {
-              "tsConfig": "projects/tsconfig.lib.prod.json"
+              "tsConfig": "projects/ngx-href/tsconfig.lib.prod.json"
             },
             "development": {
-              "tsConfig": "projects/tsconfig.lib.json"
+              "tsConfig": "projects/ngx-href/tsconfig.lib.json"
             }
           },
           "defaultConfiguration": "production"
@@ -27,11 +27,115 @@
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
-            "tsConfig": "projects/tsconfig.spec.json",
+            "tsConfig": "projects/ngx-href/tsconfig.spec.json",
             "polyfills": [
               "zone.js",
               "zone.js/testing"
             ]
+          }
+        }
+      }
+    },
+    "ngx-href-tester": {
+      "root": "projects/ngx-href-tester/",
+      "sourceRoot": "projects/ngx-href-tester/src",
+      "projectType": "application",
+      "prefix": "app",
+      "schematics": {},
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "aot": true,
+            "outputPath": "dist/ngx-href-tester",
+            "index": "projects/ngx-href-tester/src/index.html",
+            "main": "projects/ngx-href-tester/src/main.ts",
+            "polyfills": "projects/ngx-href-tester/src/polyfills.ts",
+            "tsConfig": "projects/ngx-href-tester/tsconfig.app.json",
+            "assets": [
+              "projects/ngx-href-tester/src/favicon.ico",
+              "projects/ngx-href-tester/src/assets"
+            ],
+            "styles": [
+              "projects/ngx-href-tester/src/styles.scss"
+            ],
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "fileReplacements": [
+                {
+                  "replace": "projects/ngx-href-tester/src/environments/environment.ts",
+                  "with": "projects/ngx-href-tester/src/environments/environment.prod.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "namedChunks": false,
+              "aot": true,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "buildTarget": "ngx-href-tester:build"
+          },
+          "configurations": {
+            "production": {
+              "buildTarget": "ngx-href-tester:build:production"
+            }
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/ngx-href-tester/src/test.ts",
+            "tsConfig": "projects/ngx-href-tester/tsconfig.spec.json",
+            "karmaConfig": "projects/ngx-href-tester/karma.conf.js",
+            "assets": [
+              "projects/ngx-href-tester/src/favicon.ico",
+              "projects/ngx-href-tester/src/assets"
+            ],
+            "styles": [
+              "projects/ngx-href-tester/src/styles.scss"
+            ],
+            "scripts": []
+          }
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "lintFilePatterns": [
+              "projects/ngx-href-tester//**/*.ts",
+              "projects/ngx-href-tester//**/*.html"
+            ]
+          }
+        },
+        "e2e": {
+          "builder": "@angular-devkit/build-angular:protractor",
+          "options": {
+            "protractorConfig": "projects/ngx-href-tester/e2e/protractor.conf.js",
+            "devServerTarget": "ngx-href-tester:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "ngx-href-tester:serve:production"
+            }
           }
         }
       }

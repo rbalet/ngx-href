@@ -1,0 +1,16 @@
+.example-container {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+h3,
+h4 {
+  margin-bottom: 0;
+}
+
+.empty-container {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+}
