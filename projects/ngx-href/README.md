@@ -7,6 +7,7 @@ A library that allows href to understand Angular's router while retaining its de
 4. Support using `href` with the html `button` [attribute](#directive)
 
 - [@ngx-href ](#ngx-href-)
+  - [Demo](#demo)
   - [Installation](#installation)
   - [Angular routing](#angular-routing)
   - [Avoid Spam](#avoid-spam)
@@ -22,6 +23,9 @@ A library that allows href to understand Angular's router while retaining its de
     - [Directive](#directive)
     - [Service](#service)
   - [Authors and acknowledgment](#authors-and-acknowledgment)
+
+## Demo
+- https://stackblitz.com/~/github.com/rbalet/ngx-href
 
 ## Installation
 
