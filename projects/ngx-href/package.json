@@ -1,8 +1,11 @@
 {
   "name": "ngx-href",
-  "version": "17.1.0",
+  "version": "17.1.1",
   "license": "MIT",
-  "author": "Raphael Balet",
+  "author": {
+    "name": "Raphaël Balet",
+    "email": "raphael.balet@outlook.com"
+  },
   "maintainers": [
     "raphael.balet@outlook.com"
   ],

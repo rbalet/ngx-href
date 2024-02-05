@@ -46,7 +46,11 @@ export class NgxHrefDirective implements OnDestroy {
       return
     }
 
-    this.hrefAttr = value?.replace(/ /g, '') || ''
+    try {
+      this.hrefAttr = value?.replace(/ /g, '') || ''
+    } catch (error) {
+      console.error('ngx-href: Expecting a string', '\n', error)
+    }
 
     if (this._isLinkMailOrPhone()) return
 
