@@ -1,28 +1,16 @@
-# @ngx-href [![npm version](https://img.shields.io/npm/v/ngx-href.svg)](https://www.npmjs.com/package/ngx-href)
+# @ngx-href
+![NPM](https://img.shields.io/npm/l/ngx-href)
+[![npm version](https://img.shields.io/npm/v/ngx-href.svg)](https://www.npmjs.com/package/ngx-href)
+![npm bundle size](https://img.shields.io/bundlephobia/min/ngx-href)
+![npm](https://img.shields.io/npm/dm/ngx-href)
+![codecov](https://codecov.io/gh/rbalet/ngx-href/branch/master/graph/badge.svg)
+ 
 A library that allows href to understand Angular's router while retaining its default functionality.
 
 1. Use `router.navigate()` for [internal link](#angular-routing)
 2. Support scroll with the `#` attributes and let you configure the [scrolling logic](#scroll-logic)
 3. Automatically append `rel="nooepener"` & `target="_blank"` to external link [if wished so](#installation)
 4. Support using `href` with the html `button` [attribute](#directive)
-
-- [@ngx-href ](#ngx-href-)
-  - [Demo](#demo)
-  - [Installation](#installation)
-  - [Angular routing](#angular-routing)
-  - [Avoid Spam](#avoid-spam)
-  - [Scroll logic](#scroll-logic)
-    - [Behavior](#behavior)
-    - [defaultOffset](#defaultoffset)
-    - [navbarOffset](#navbaroffset)
-  - [External link](#external-link)
-    - [Rel attribute](#rel-attribute)
-    - [Target attribute](#target-attribute)
-    - [target attribute](#target-attribute-1)
-  - [Usage](#usage)
-    - [Directive](#directive)
-    - [Service](#service)
-  - [Authors and acknowledgment](#authors-and-acknowledgment)
 
 ## Demo
 - https://stackblitz.com/~/github.com/rbalet/ngx-href
