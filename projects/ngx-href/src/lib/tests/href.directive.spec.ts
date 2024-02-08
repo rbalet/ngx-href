@@ -6,7 +6,7 @@ import {
   ViewContainerRef,
 } from '@angular/core'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
-import { NgxHrefDirective } from 'ngx-href'
+import { NgxHrefDirective } from '../href.directive'
 import { NgxHrefModule } from '../href.module'
 import { NgxHrefService } from '../href.service'
 
