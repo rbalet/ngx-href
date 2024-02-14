@@ -22,7 +22,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build",
+    "build": "ng build ngx-href --configuration production",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "test:ci": "ng test ngx-href --watch=false --code-coverage --no-progress --browsers=ChromeHeadless",
