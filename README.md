@@ -1,11 +1,11 @@
-# @ngx-href
+# ngx-href
+A library that allows href to understand Angular's router while retaining its default functionality.
+
 ![NPM](https://img.shields.io/npm/l/ngx-href)
 [![npm version](https://img.shields.io/npm/v/ngx-href.svg)](https://www.npmjs.com/package/ngx-href)
 ![npm bundle size](https://img.shields.io/bundlephobia/min/ngx-href)
 ![npm](https://img.shields.io/npm/dm/ngx-href)
-![codecov](https://codecov.io/gh/rbalet/ngx-href/branch/master/graph/badge.svg)
- 
-A library that allows href to understand Angular's router while retaining its default functionality.
+[![codecov](https://codecov.io/gh/rbalet/ngx-href/graph/badge.svg?token=1Z1BJUFQD2)](https://codecov.io/gh/rbalet/ngx-href)
 
 1. Use `router.navigate()` for [internal link](#angular-routing)
 2. Support scroll with the `#` attributes and let you configure the [scrolling logic](#scroll-logic)
