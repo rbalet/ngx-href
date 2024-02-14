@@ -45,6 +45,7 @@
     "@angular-devkit/build-angular": "^17.1.2",
     "@angular/cli": "~17.1.2",
     "@angular/compiler-cli": "^17.1.2",
+    "@semantic-release/apm-config": "^9.0.1",
     "@types/jasmine": "~5.1.4",
     "jasmine-core": "~5.1.1",
     "karma": "~6.4.2",
@@ -54,6 +55,10 @@
     "karma-jasmine": "~5.1.0",
     "karma-jasmine-html-reporter": "~2.1.0",
     "ng-packagr": "^17.1.2",
+    "semantic-release": "^23.0.2",
     "typescript": "~5.3.3"
+  },
+  "release": {
+    "extends": "@semantic-release/apm-config"
   }
 }
