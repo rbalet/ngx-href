@@ -26,7 +26,8 @@
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "test:ci": "ng test ngx-href --watch=false --code-coverage --no-progress --browsers=ChromeHeadless",
-    "publish": "ng build ngx-href --configuration production && npm publish ./dist/ngx-href"
+    "publish": "ng build ngx-href --configuration production && npm publish ./dist/ngx-href",
+    "prepare": "husky install"
   },
   "dependencies": {
     "@angular/animations": "^17.2.3",
@@ -45,8 +46,11 @@
     "@angular-devkit/build-angular": "^17.2.2",
     "@angular/cli": "^17.2.2",
     "@angular/compiler-cli": "^17.2.3",
+    "@commitlint/cli": "^19.1.0",
+    "@commitlint/config-conventional": "^19.1.0",
     "@semantic-release/apm-config": "^9.0.1",
     "@types/jasmine": "~5.1.4",
+    "husky": "^8.0.0",
     "jasmine-core": "~5.1.2",
     "karma": "~6.4.3",
     "karma-chrome-launcher": "~3.2.0",
