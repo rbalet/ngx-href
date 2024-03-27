@@ -11,6 +11,8 @@ A library that allows href to understand Angular's router while retaining its de
 2. Support scroll with the `#` attributes and let you configure the [scrolling logic](#scroll-logic)
 3. Automatically append `rel="nooepener"` & `target="_blank"` to external link [if wished so](#installation)
 4. Support using `href` with the html `button` [attribute](#directive)
+5. Enable easy `Scroll when ready` mechanism
+6. Let you transform text to well formatted `anchor`
 
 ## Demo
 - https://stackblitz.com/~/github.com/rbalet/ngx-href
@@ -32,6 +34,7 @@ import { ngxHrefModule, ngxHrefService } from 'ngx-href'
      * defaultOffset="0"
      * navbarOffset="0"
      * rel=undefined
+     * retryTimeout=undefined
      * target="_self"
      **/ 
     ngxHrefModule.forRoot({}), 
@@ -43,6 +46,7 @@ import { ngxHrefModule, ngxHrefService } from 'ngx-href'
       defaultOffset:"30",
       navbarOffset:"60",
       rel:"noopener nofollow",
+      retryTimeout: 300,
       target:"_blank",
     }),
   ],
@@ -99,6 +103,14 @@ ngAfterContentInit(): void {
 }
 ```
 
+### retryTimeout
+**Default:** `undefined`
+**Accepted value:** `number`
+
+Trigger a second `scrollTo` event after `retryTimeout` milliseconds.  
+
+**Note:** This should be avoided, prefer playing with skeleton and fixed height
+
 
 ## External link
 ### Rel attribute 
@@ -119,17 +131,15 @@ Can also be passed individually directly through html
 <a href="https://my-external-url.com" target="_blank">
 ```
 
-### target attribute
-
-
 ## Usage
-Wherever you plan to use the href directive
+Wherever you plan to use the href directive or pipe
 
 ```typescript
-import { ngxHrefModule } from 'ngx-href'
+import { NgxHrefDirective, ToAnchorPipe } from 'ngx-href'
 
 imports: [
-  ngxHrefModule,
+  NgxHrefDirective,
+  NgxHrefPipe,
 ]
 ```
 
@@ -166,6 +176,20 @@ Normal use
 </a>
 ```
 
+### Pipe: _ToAnchorPipe_
+The `toAnchor` pipe let you 
+1. transform an element ot a correct anchor
+example: `my Title $%` will be transform to `my-title`
+
+2. Emit that this anchor have been created, so that we can scroll to that element
+
+```html
+  <!-- Just transform the title to anchor like string-->
+  <div [id]="my Title $%"| toAnchor : false"> </div>
+
+  <!-- If an href has been previously triggered, scroll to this element -->
+  <div [id]="my Title $%"| toAnchor"> </div>
+```
 
 ### Service
 ```typescript
@@ -186,6 +210,7 @@ Normal use
 
 <h2 id="myAnchor">A title</h2>
 ```
+
 
 ## Authors and acknowledgment
 * maintainer [Raphaël Balet](https://github.com/rbalet)

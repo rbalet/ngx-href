@@ -43,6 +43,7 @@ export const routes: Routes = [
       defaultOffset: 100,
       defaultRelAttr: '',
       defaultTargetAttr: '_blank',
+      retryTimeout: 300,
     }),
   ],
   bootstrap: [AppComponent],

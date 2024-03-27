@@ -8,6 +8,7 @@ import { NgxHrefServiceConfig } from './href.interface'
 })
 export class NgxHrefService {
   anchor$: BehaviorSubject<string | null> = new BehaviorSubject<string | null>(null)
+  loadedAnchor$: BehaviorSubject<string | null> = new BehaviorSubject<string | null>(null) // Trigger the scrollTo mechanism from outside
 
   avoidSpam?: boolean
   behavior!: ScrollBehavior
@@ -15,8 +16,9 @@ export class NgxHrefService {
   navbarOffset!: number
   defaultRelAttr?: string
   defaultTargetAttr!: string
+  retryTimeout?: number
 
-  private _actualAnchor = ''
+  private _actualAnchor?: string
 
   constructor(@Inject(NgxHrefServiceProvider) _config: NgxHrefServiceConfig) {
     this.avoidSpam = _config.avoidSpam
@@ -25,24 +27,29 @@ export class NgxHrefService {
     this.navbarOffset = typeof _config.navbarOffset === 'number' ? _config.navbarOffset : 0
     this.defaultRelAttr = _config.defaultRelAttr
     this.defaultTargetAttr = _config.defaultTargetAttr || '_self'
+    this.retryTimeout = _config.retryTimeout
+
+    this.loadedAnchor$.subscribe((anchor) => {
+      if (anchor === this._actualAnchor) {
+        this.scrollTo(anchor, 9) // 9: triggered only once
+      }
+    })
   }
 
   scrollTo(anchor?: string, counter = 0) {
-    if (!anchor) return
-
-    const newAnchor = anchor.replace(/ /g, '')
-
-    if (counter === 0) this.anchor$.next(newAnchor)
-
     if (
+      !anchor ||
       counter >= 10 || // Counter over, this element doesn't exist or the page is too slow
-      (newAnchor === this._actualAnchor && counter === 0) // Multiple click on the same url
+      (anchor === this._actualAnchor && counter === 0) // Multiple click on the same url
     )
       return
 
-    this._actualAnchor = newAnchor
+    if (counter === 0) {
+      this._actualAnchor = anchor
+      this.anchor$.next(anchor)
+    }
 
-    const anchorRef = document.getElementById(newAnchor)
+    const anchorRef = document.getElementById(anchor)
 
     if (anchorRef) {
       const offsetPosition =
@@ -55,11 +62,21 @@ export class NgxHrefService {
         behavior: this.behavior,
       })
 
-      this._actualAnchor = ''
+      if (this.retryTimeout)
+        setTimeout(() => {
+          window.scrollTo({
+            top: offsetPosition,
+            behavior: this.behavior,
+          })
+        }, this.retryTimeout)
+
+      this._actualAnchor = undefined
     } else {
       setTimeout(() => {
+        if (anchor !== this._actualAnchor) return
+
         counter++
-        this.scrollTo(newAnchor, counter)
+        this.scrollTo(anchor, counter)
       }, 200)
     }
   }

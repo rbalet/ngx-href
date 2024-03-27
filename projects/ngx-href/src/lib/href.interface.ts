@@ -5,4 +5,5 @@ export interface NgxHrefServiceConfig {
   defaultOffset?: number
   defaultRelAttr?: string
   defaultTargetAttr?: string
+  retryTimeout?: number
 }
