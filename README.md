@@ -25,7 +25,7 @@ npm install ngx-href
 
 Inside your `app.module.ts` file.
 ```typescript
-import { ngxHrefModule, ngxHrefService } from 'ngx-href'
+import { NgxHrefModule } from 'ngx-href'
 
   imports: [
     /** Default
@@ -37,10 +37,10 @@ import { ngxHrefModule, ngxHrefService } from 'ngx-href'
      * retryTimeout=undefined
      * target="_self"
      **/ 
-    ngxHrefModule.forRoot({}), 
+    NgxHrefModule.forRoot({}), 
 
     // Or
-    ngxHrefModule.forRoot({
+    NgxHrefModule.forRoot({
       avoidSpam: true,
       behavior:"smooth",
       defaultOffset:"30",
@@ -164,6 +164,15 @@ Normal use
   An external link
 </a>
 
+<!-- Tel -->
+<a href="tel:+41791112233">
+  tel:+41791112233
+</a>
+
+<!-- Email -->
+<a href="mailto:foobar@outlook.com">
+  mailto:foobar&#64;outlook.com
+</a>
 
 <!-- Scroll -->
 <a href="#myAnchor">

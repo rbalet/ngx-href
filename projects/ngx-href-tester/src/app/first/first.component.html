@@ -2,26 +2,24 @@
 
 <h3>Internal link</h3>
 <div class="example-container">
-  <button ngxBackButton href="/home/second">Second page</button>
+  <button href="/home/second">Second page</button>
   <p><strong>href="/home/second"</strong>: Go to the second page (sibling)</p>
 </div>
 
 <div class="example-container">
-  <button ngxBackButton href="#scrollToMe">ScrollTo</button>
+  <button href="#scrollToMe">ScrollTo</button>
   <p><strong>href="#scrollToMe"</strong>Scroll to the title</p>
 </div>
 
 <h3>External link</h3>
 <h4>DefaultTargetAttr: _blank</h4>
 <div class="example-container">
-  <button ngxBackButton href="https://github.com/rbalet/ngx-href">Open github page</button>
+  <button href="https://github.com/rbalet/ngx-href">Open github page</button>
   <p><strong>href="https://..."</strong>: Open the new page in a new page</p>
 </div>
 <h4>target="_self"</h4>
 <div class="example-container">
-  <button ngxBackButton href="https://github.com/rbalet/ngx-href" target="_self">
-    Open github page
-  </button>
+  <button href="https://github.com/rbalet/ngx-href" target="_self">Open github page</button>
   <p>
     <strong>href="https://..."</strong> & <strong>target="_self"</strong>: Open the new page in the
     current page
@@ -30,7 +28,7 @@
 
 <h3>avoidSpam</h3>
 <div class="example-container">
-  <a #aValue href="tel:+41791112233"> tel:+41791112233</a>
+  <a #aValue href="tel:+41791112233">tel:+41791112233</a>
   <p>
     <strong>href="tel:..."</strong>: Custom the href till hovering - Look at the DOM with your dev
     tool
