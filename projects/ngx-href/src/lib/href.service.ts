@@ -44,10 +44,12 @@ export class NgxHrefService {
   scrollTo(anchor?: string, counter = 0) {
     if (
       !anchor ||
-      counter >= 10 || // Counter over, this element doesn't exist or the page is too slow
-      (anchor === this._actualAnchor && counter === 0) // Multiple click on the same url
-    )
+      counter >= 10 // Counter over, this element doesn't exist or the page is too slow
+    ) {
+      this._actualAnchor = undefined
       return
+    }
+    if (anchor === this._actualAnchor && counter === 0) return // Multiple click on the same url
 
     if (counter === 0) {
       this.setAnchor(anchor)
