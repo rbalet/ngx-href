@@ -36,6 +36,11 @@ export class NgxHrefService {
     })
   }
 
+  setAnchor(anchor: string) {
+    this._actualAnchor = anchor
+    this.anchor$.next(anchor)
+  }
+
   scrollTo(anchor?: string, counter = 0) {
     if (
       !anchor ||
@@ -45,8 +50,7 @@ export class NgxHrefService {
       return
 
     if (counter === 0) {
-      this._actualAnchor = anchor
-      this.anchor$.next(anchor)
+      this.setAnchor(anchor)
     }
 
     const anchorRef = document.getElementById(anchor)
