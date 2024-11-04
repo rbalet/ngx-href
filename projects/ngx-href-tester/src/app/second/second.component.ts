@@ -1,4 +1,3 @@
-import { CommonModule } from '@angular/common'
 import { ChangeDetectionStrategy, Component } from '@angular/core'
 import { NgxHrefDirective } from '../../../../ngx-href/src/lib/href.directive'
 
@@ -6,8 +5,6 @@ import { NgxHrefDirective } from '../../../../ngx-href/src/lib/href.directive'
   selector: 'app-second',
   standalone: true,
   imports: [
-    CommonModule,
-
     // Vendors
     NgxHrefDirective,
   ],

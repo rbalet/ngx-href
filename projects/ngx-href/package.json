@@ -11,9 +11,11 @@
   ],
   "keywords": [
     "angular",
+    "ngx",
+    "href",
+    "directive",
     "back",
-    "button",
-    "directive"
+    "button"
   ],
   "homepage": "https://github.com/rbalet/ngx-href#readme",
   "bugs": {
@@ -23,7 +25,7 @@
     "url": "https://github.com/rbalet/ngx-href"
   },
   "dependencies": {
-    "tslib": "^2.6.3"
+    "tslib": "^2.8.1"
   },
   "peerDependencies": {
     "@angular/common": ">=15.2.0",
