@@ -28,7 +28,8 @@
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "test:ci": "ng test ngx-href --watch=false --code-coverage --no-progress --browsers=ChromeHeadless",
-    "publish": "ng build ngx-href --configuration production && npm publish ./dist/ngx-href",
+    "publish": "ng build ngx-href --configuration production && npm run copy-files && npm publish ./dist/ngx-href",
+    "copy-files": "cp README.md dist/ngx-href && cp LICENSE dist/ngx-href",
     "prepare": "husky"
   },
   "dependencies": {
