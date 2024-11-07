@@ -203,10 +203,10 @@ example: `my Title $%` will be transform to `my-title`
 ### Service
 ```typescript
 // foo.component.ts
-import { ngxHrefService } from 'ngx-href'
+import { NgxHrefService } from 'ngx-href'
 
 // ...
- constructor(public ngxHrefService: ngxHrefService) {}
+ constructor(public ngxHrefService: NgxHrefService) {}
 ```
 
 Normal use
