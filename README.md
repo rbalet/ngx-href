@@ -166,12 +166,12 @@ Normal use
 
 <!-- Tel -->
 <a href="tel:+41791112233">
-  tel:+41791112233
+  +41791112233
 </a>
 
 <!-- Email -->
 <a href="mailto:foobar@outlook.com">
-  mailto:foobar&#64;outlook.com
+  foobar&#64;outlook.com
 </a>
 
 <!-- Scroll -->
