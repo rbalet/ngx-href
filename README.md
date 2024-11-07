@@ -139,7 +139,7 @@ import { NgxHrefDirective, ToAnchorPipe } from 'ngx-href'
 
 imports: [
   NgxHrefDirective,
-  NgxHrefPipe,
+  ToAnchorPipe,
 ]
 ```
 
