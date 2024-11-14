@@ -39,17 +39,26 @@ jobs:
       issues: write # to be able to comment on released issues
       pull-requests: write # to be able to comment on released pull requests
       id-token: write # to enable use of OIDC for npm provenance
+
     steps:
-      - uses: actions/checkout@v4
+      - name: ⬇️ Get latest code
+        uses: actions/checkout@v4
         with:
           fetch-depth: 0
-      - uses: actions/setup-node@v4
+
+      - name: ⬇️ Get Node.js
+        uses: actions/setup-node@v4
         with:
           node-version: 20
           cache: 'npm'
-      - run: npm i
-      - run: npm run build
-      - name: release
+
+      - name: 📦 Install dependencies
+        run: npm i
+
+      - name: 🏗️ Build
+        run: npm run build && npm run copy-files
+
+      - name: 🚀 Release
         run: cd dist/ngx-href && npx semantic-release --branches main
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
