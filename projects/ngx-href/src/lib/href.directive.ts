@@ -79,9 +79,8 @@ export class NgxHrefDirective implements OnDestroy {
       if (this._ngxHrefService.avoidSpam) {
         this._hrefAttr = this.hrefAttr
 
-        if (this.hrefAttr?.startsWith('mailto'))
-          this.hrefAttr = this.hrefAttr.replace('mailto:', '').split('@').join('(at)')
-        else this.hrefAttr = this.hrefAttr.replace('tel:', '')
+        if (this.hrefAttr?.startsWith('mailto')) this.hrefAttr = 'mailto:obfuscated'
+        else this.hrefAttr = 'tel:obfuscated'
 
         this._mouseenterListener = () => {
           if (this._hrefAttr) this.hrefAttr = this._hrefAttr
