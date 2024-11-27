@@ -11,11 +11,16 @@ A library that allows href to understand Angular's router while retaining its de
 2. Support scroll with the `#` attributes and let you configure the [scrolling logic](#scroll-logic)
 3. Automatically append `rel="nooepener"` & `target="_blank"` to external link [if wished so](#installation)
 4. Support using `href` with the html `button` [attribute](#directive)
-5. Enable easy `Scroll when ready` mechanism
+5. Enable easy `Scroll when ready` mechanism which works with `SSR`
 6. Let you transform text to well formatted `anchor`
 
 ## Demo
 - https://stackblitz.com/~/github.com/rbalet/ngx-href
+
+## 19.0.0 Breaking change
+* **Now use `scrollIntoView` which render the `Offset` useless.**  
+* Please use [scroll-margin-top](https://developer.mozilla.org/en-US/docs/Web/CSS/scroll-margin-top) instead.
+* Nows also work on SSR
 
 ## Installation
 
@@ -31,8 +36,8 @@ import { NgxHrefModule } from 'ngx-href'
     /** Default
      * avoidSpam="false"
      * behavior="auto"
-     * defaultOffset="0"
-     * navbarOffset="0"
+     * block="start"
+     * inline="nearest"
      * rel=undefined
      * retryTimeout=undefined
      * target="_self"
@@ -43,8 +48,8 @@ import { NgxHrefModule } from 'ngx-href'
     NgxHrefModule.forRoot({
       avoidSpam: true,
       behavior:"smooth",
-      defaultOffset:"30",
-      navbarOffset:"60",
+      block:"center",
+      inline:"nearest",
       rel:"noopener nofollow",
       retryTimeout: 300,
       target:"_blank",
@@ -69,39 +74,8 @@ Can also be passed individually directly through html
 <a href="https://my-external-url.com" behavior="instant">
 ```
 
-### defaultOffset
-The standard offset to be added to your website `scrollTo` logic
-
-**Default:** `0`  
-**Accepted value:** `number`  
-Together with the `navbarOffset` will be the total offset for the scroll.
-
-### navbarOffset
-An additional offset calculated base on your navbar height
-
-**Default:** `0`
-**Accepted value:** `number`
-Together with the `defaultOffset` will be the total offset for the scroll.
-
-You can update this value after the navbar is rendered.
-
-```html
-<navbar #navbar>
-   <!-- My html code -->
-</navbar>
-```
-
-```typescript
-@ViewChild('navbar', { static: true }) navbar: ElementRef
-
-constructor(
-  private _ngxHrefService: NgxHrefService,
-) {}
-
-ngAfterContentInit(): void {  
-  this._ngxHrefService.navbarOffset = this.navbar.nativeElement.offsetHeight
-}
-```
+### Offset
+If you wish to add offset, add `scroll-margin-top: $offset` to your targeted component -> [read more](https://developer.mozilla.org/en-US/docs/Web/CSS/scroll-margin-top)
 
 ### retryTimeout
 **Default:** `undefined`

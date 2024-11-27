@@ -1,4 +1,4 @@
-import { Inject, Injectable } from '@angular/core'
+import { Inject, Injectable, Renderer2, RendererFactory2 } from '@angular/core'
 import { BehaviorSubject } from 'rxjs'
 import { NgxHrefServiceProvider } from './href.const'
 import { NgxHrefServiceConfig } from './href.interface'
@@ -7,27 +7,34 @@ import { NgxHrefServiceConfig } from './href.interface'
   providedIn: 'root',
 })
 export class NgxHrefService {
+  private renderer: Renderer2
+
   anchor$: BehaviorSubject<string | null> = new BehaviorSubject<string | null>(null)
   loadedAnchor$: BehaviorSubject<string | null> = new BehaviorSubject<string | null>(null) // Trigger the scrollTo mechanism from outside
 
   avoidSpam?: boolean
   behavior!: ScrollBehavior
-  defaultOffset!: number
-  navbarOffset!: number
+  block!: ScrollLogicalPosition
   defaultRelAttr?: string
   defaultTargetAttr!: string
+  inline!: ScrollLogicalPosition
   retryTimeout?: number
 
   private _actualAnchor?: string
 
-  constructor(@Inject(NgxHrefServiceProvider) _config: NgxHrefServiceConfig) {
+  constructor(
+    @Inject(NgxHrefServiceProvider) _config: NgxHrefServiceConfig,
+    _rendererFactory: RendererFactory2,
+  ) {
+    this.renderer = _rendererFactory.createRenderer(null, null)
+
     this.avoidSpam = _config.avoidSpam
     this.behavior = _config.behavior || 'auto'
-    this.defaultOffset = typeof _config.defaultOffset === 'number' ? _config.defaultOffset : 0
-    this.navbarOffset = typeof _config.navbarOffset === 'number' ? _config.navbarOffset : 0
+    this.block = _config.block || 'start'
     this.defaultRelAttr = _config.defaultRelAttr
     this.defaultTargetAttr = _config.defaultTargetAttr || '_self'
-    this.retryTimeout = _config.retryTimeout
+    this.inline = _config.inline || 'nearest'
+    this.retryTimeout = _config.retryTimeout || 0
 
     this.loadedAnchor$.subscribe((anchor) => {
       if (anchor === this._actualAnchor) {
@@ -55,28 +62,16 @@ export class NgxHrefService {
       this.setAnchor(anchor)
     }
 
-    const anchorRef = document.getElementById(anchor)
+    const anchorRef: HTMLElement = this.renderer.selectRootElement(`#${anchor}`, true)
 
     if (anchorRef) {
-      const offsetPosition =
-        anchorRef.getBoundingClientRect().top +
-        window.scrollY -
-        (this.navbarOffset + this.defaultOffset)
+      anchorRef.scrollIntoView({ behavior: this.behavior, block: this.block, inline: this.inline })
 
-      window.scrollTo({
-        top: offsetPosition,
-        behavior: this.behavior,
-      })
+      setTimeout(() => {
+        anchorRef.scrollIntoView({ behavior: this.behavior })
 
-      if (this.retryTimeout)
-        setTimeout(() => {
-          window.scrollTo({
-            top: offsetPosition,
-            behavior: this.behavior,
-          })
-        }, this.retryTimeout)
-
-      this._actualAnchor = undefined
+        this._actualAnchor = undefined
+      }, this.retryTimeout)
     } else {
       setTimeout(() => {
         if (anchor !== this._actualAnchor) return
