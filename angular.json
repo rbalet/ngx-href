@@ -44,12 +44,13 @@
       "schematics": {},
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-angular:browser",
+          "builder": "@angular-devkit/build-angular:application",
           "options": {
             "aot": true,
-            "outputPath": "dist/ngx-href-tester",
+            "outputPath": {
+              "base": "dist/ngx-href-tester"
+            },
             "index": "projects/ngx-href-tester/src/index.html",
-            "main": "projects/ngx-href-tester/src/main.ts",
             "tsConfig": "projects/ngx-href-tester/tsconfig.app.json",
             "assets": [
               "projects/ngx-href-tester/src/favicon.ico",
@@ -58,7 +59,8 @@
             "styles": [
               "projects/ngx-href-tester/src/styles.scss"
             ],
-            "scripts": []
+            "scripts": [],
+            "browser": "projects/ngx-href-tester/src/main.ts"
           },
           "configurations": {
             "production": {
@@ -73,8 +75,6 @@
               "namedChunks": false,
               "aot": true,
               "extractLicenses": true,
-              "vendorChunk": false,
-              "buildOptimizer": true,
               "budgets": [
                 {
                   "type": "initial",
