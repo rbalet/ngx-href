@@ -40,9 +40,9 @@ export const routes: Routes = [
     // Init
     NgxHrefModule.forRoot({
       avoidSpam: true,
-      defaultOffset: 100,
       defaultRelAttr: '',
       defaultTargetAttr: '_blank',
+      retryTimeout: 300,
     }),
   ],
   bootstrap: [AppComponent],

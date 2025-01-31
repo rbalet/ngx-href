@@ -8,6 +8,7 @@ export class NgxHrefModule {
   static forRoot(config: NgxHrefServiceConfig): ModuleWithProviders<NgxHrefModule> {
     return {
       ngModule: NgxHrefModule,
+
       providers: [
         NgxHrefService,
         {
