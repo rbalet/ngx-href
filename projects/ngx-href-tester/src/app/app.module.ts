@@ -1,8 +1,7 @@
-import { CommonModule } from '@angular/common'
 import { NgModule } from '@angular/core'
 import { BrowserModule } from '@angular/platform-browser'
 import { RouterModule, Routes } from '@angular/router'
-import { NgxHrefModule } from '../../../ngx-href/src/lib/href.module'
+import { NgxHrefServiceProvider } from 'projects/ngx-href/src/lib/href.const'
 import { AppComponent } from './app.component'
 
 export const routes: Routes = [
@@ -31,19 +30,17 @@ export const routes: Routes = [
 
 @NgModule({
   declarations: [AppComponent],
-  imports: [
-    RouterModule.forRoot(routes),
-
-    BrowserModule,
-    CommonModule,
-
-    // Init
-    NgxHrefModule.forRoot({
-      avoidSpam: true,
-      defaultRelAttr: '',
-      defaultTargetAttr: '_blank',
-      retryTimeout: 300,
-    }),
+  imports: [RouterModule.forRoot(routes), BrowserModule],
+  providers: [
+    {
+      provide: NgxHrefServiceProvider,
+      useValue: {
+        avoidSpam: true,
+        defaultRelAttr: '',
+        defaultTargetAttr: '_blank',
+        retryTimeout: 300,
+      },
+    },
   ],
   bootstrap: [AppComponent],
 })

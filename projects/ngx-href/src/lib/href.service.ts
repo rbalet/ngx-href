@@ -1,41 +1,30 @@
-import { Inject, Injectable, Renderer2, RendererFactory2 } from '@angular/core'
+import { inject, Injectable, RendererFactory2 } from '@angular/core'
 import { BehaviorSubject } from 'rxjs'
 import { NgxHrefServiceProvider } from './href.const'
-import { NgxHrefServiceConfig } from './href.interface'
 
 @Injectable({
   providedIn: 'root',
 })
 export class NgxHrefService {
-  private renderer: Renderer2
+  readonly #rendererFactory = inject(RendererFactory2)
+  readonly #config = inject(NgxHrefServiceProvider, { optional: true })
+
+  private _renderer = this.#rendererFactory.createRenderer(null, null)
 
   anchor$: BehaviorSubject<string | null> = new BehaviorSubject<string | null>(null)
   loadedAnchor$: BehaviorSubject<string | null> = new BehaviorSubject<string | null>(null) // Trigger the scrollTo mechanism from outside
 
-  avoidSpam?: boolean
-  behavior!: ScrollBehavior
-  block!: ScrollLogicalPosition
-  defaultRelAttr?: string
-  defaultTargetAttr!: string
-  inline!: ScrollLogicalPosition
-  retryTimeout?: number
+  avoidSpam = this.#config?.avoidSpam || false
+  behavior = this.#config?.behavior || 'auto'
+  block = this.#config?.block || 'start'
+  defaultRelAttr = this.#config?.defaultRelAttr
+  defaultTargetAttr = this.#config?.defaultTargetAttr || '_self'
+  inline = this.#config?.inline || 'nearest'
+  retryTimeout = this.#config?.retryTimeout || 0
 
   private _actualAnchor?: string
 
-  constructor(
-    @Inject(NgxHrefServiceProvider) _config: NgxHrefServiceConfig,
-    _rendererFactory: RendererFactory2,
-  ) {
-    this.renderer = _rendererFactory.createRenderer(null, null)
-
-    this.avoidSpam = _config.avoidSpam
-    this.behavior = _config.behavior || 'auto'
-    this.block = _config.block || 'start'
-    this.defaultRelAttr = _config.defaultRelAttr
-    this.defaultTargetAttr = _config.defaultTargetAttr || '_self'
-    this.inline = _config.inline || 'nearest'
-    this.retryTimeout = _config.retryTimeout || 0
-
+  constructor() {
     this.loadedAnchor$.subscribe((anchor) => {
       if (anchor === this._actualAnchor) {
         this.scrollTo(anchor, 9) // 9: triggered only once
@@ -62,7 +51,7 @@ export class NgxHrefService {
       this.setAnchor(anchor)
     }
 
-    const anchorRef: HTMLElement = this.renderer.selectRootElement(`#${anchor}`, true)
+    const anchorRef: HTMLElement = this._renderer.selectRootElement(`#${anchor}`, true)
 
     if (anchorRef) {
       anchorRef.scrollIntoView({ behavior: this.behavior, block: this.block, inline: this.inline })

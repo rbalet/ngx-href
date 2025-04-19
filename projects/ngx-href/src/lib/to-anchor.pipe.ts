@@ -1,11 +1,12 @@
-import { Pipe, PipeTransform } from '@angular/core'
+import { inject, Pipe, PipeTransform } from '@angular/core'
 import { NgxHrefService } from './href.service'
 
 @Pipe({
-  standalone: true,
   name: 'toAnchor',
 })
 export class ToAnchorPipe implements PipeTransform {
+  readonly #ngxHrefService = inject(NgxHrefService)
+
   private _removedChars = [
     ';',
     ':',
@@ -51,8 +52,6 @@ export class ToAnchorPipe implements PipeTransform {
     ü: 'ue',
   }
 
-  constructor(private _ngxHrefService: NgxHrefService) {}
-
   transform(id: string, emit = true): string {
     if (!id) return ''
 
@@ -64,7 +63,7 @@ export class ToAnchorPipe implements PipeTransform {
       anchor = anchor.split(char).join('')
     })
 
-    if (emit) this._ngxHrefService.loadedAnchor$.next(anchor)
+    if (emit) this.#ngxHrefService.loadedAnchor$.next(anchor)
 
     return anchor
   }

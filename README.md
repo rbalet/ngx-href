@@ -16,6 +16,10 @@ A library that allows href to understand Angular's router while retaining its de
 
 ## Demo
 - https://stackblitz.com/~/github.com/rbalet/ngx-href
+  
+## 19.2.0 Breaking change
+* Use of standalone
+* Configuration is now optional
 
 ## 19.0.0 Breaking change
 * **Now use `scrollIntoView` which render the `Offset` useless.**  
@@ -28,33 +32,34 @@ A library that allows href to understand Angular's router while retaining its de
 npm install ngx-href
 ```
 
+### Optional configuration
+
 Inside your `app.module.ts` file.
 ```typescript
-import { NgxHrefModule } from 'ngx-href'
+import { NgxHrefServiceProvider } from 'ngx-href'
 
-  imports: [
-    /** Default
-     * avoidSpam="false"
-     * behavior="auto"
-     * block="start"
-     * inline="nearest"
-     * rel=undefined
-     * retryTimeout=undefined
-     * target="_self"
-     **/ 
-    NgxHrefModule.forRoot({}), 
-
-    // Or
-    NgxHrefModule.forRoot({
-      avoidSpam: true,
-      behavior:"smooth",
-      block:"center",
-      inline:"nearest",
-      rel:"noopener nofollow",
-      retryTimeout: 300,
-      target:"_blank",
-    }),
+bootstrapApplication(AppComponent, {
+  providers: [
+    {
+      provide: NgxHrefServiceProvider,
+      useValue: {
+      /** Default
+       * avoidSpam="false"
+       * behavior="auto"
+       * block="start"
+       * inline="nearest"
+       * rel=undefined
+       * retryTimeout=undefined
+       * target="_self"
+       **/ 
+        avoidSpam: true,
+        defaultRelAttr: '',
+        defaultTargetAttr: '_blank',
+        retryTimeout: 300,
+      },
+    },
   ],
+}).catch((err) => console.error(err));
 ```
 
 ## Angular routing
