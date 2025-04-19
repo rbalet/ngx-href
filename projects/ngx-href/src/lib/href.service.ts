@@ -14,13 +14,10 @@ export class NgxHrefService {
   anchor$: BehaviorSubject<string | null> = new BehaviorSubject<string | null>(null)
   loadedAnchor$: BehaviorSubject<string | null> = new BehaviorSubject<string | null>(null) // Trigger the scrollTo mechanism from outside
 
-  avoidSpam = this.#config?.avoidSpam || false
-  behavior = this.#config?.behavior || 'auto'
-  block = this.#config?.block || 'start'
-  defaultRelAttr = this.#config?.defaultRelAttr
-  defaultTargetAttr = this.#config?.defaultTargetAttr || '_self'
-  inline = this.#config?.inline || 'nearest'
-  retryTimeout = this.#config?.retryTimeout || 0
+  private _behavior = this.#config?.behavior || 'auto'
+  private _block = this.#config?.block || 'start'
+  private _inline = this.#config?.inline || 'nearest'
+  private _retryTimeout = this.#config?.retryTimeout || 0
 
   private _actualAnchor?: string
 
@@ -54,13 +51,17 @@ export class NgxHrefService {
     const anchorRef: HTMLElement = this._renderer.selectRootElement(`#${anchor}`, true)
 
     if (anchorRef) {
-      anchorRef.scrollIntoView({ behavior: this.behavior, block: this.block, inline: this.inline })
+      anchorRef.scrollIntoView({
+        behavior: this._behavior,
+        block: this._block,
+        inline: this._inline,
+      })
 
       setTimeout(() => {
-        anchorRef.scrollIntoView({ behavior: this.behavior })
+        anchorRef.scrollIntoView({ behavior: this._behavior })
 
         this._actualAnchor = undefined
-      }, this.retryTimeout)
+      }, this._retryTimeout)
     } else {
       setTimeout(() => {
         if (anchor !== this._actualAnchor) return
