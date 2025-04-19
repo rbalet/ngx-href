@@ -3,7 +3,6 @@ import { Router } from '@angular/router'
 import { NgxHrefService } from './href.service'
 
 @Directive({
-  standalone: true,
   selector: 'a[href], button[href]',
   host: {
     '[attr.rel]': 'rel$()',
