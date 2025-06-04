@@ -1,13 +1,29 @@
-import { enableProdMode } from '@angular/core'
-import { platformBrowserDynamic } from '@angular/platform-browser-dynamic'
+import { enableProdMode, provideZonelessChangeDetection } from '@angular/core'
+import { bootstrapApplication } from '@angular/platform-browser'
+import { provideRouter } from '@angular/router'
 import 'zone.js'
-import { AppModule } from './app/app.module'
+import { NgxHrefServiceProvider } from '../../ngx-href/src/lib/href.const'
+import { AppComponent } from './app/app.component'
+import { routes } from './app/app.routes'
 import { environment } from './environments/environment'
 
 if (environment.production) {
   enableProdMode()
 }
 
-const bootstrap = () => platformBrowserDynamic().bootstrapModule(AppModule)
+bootstrapApplication(AppComponent, {
+  providers: [
+    provideZonelessChangeDetection(),
+    provideRouter(routes),
 
-bootstrap().catch((err) => console.error(err))
+    {
+      provide: NgxHrefServiceProvider,
+      useValue: {
+        avoidSpam: true,
+        defaultRelAttr: '',
+        defaultTargetAttr: '_blank',
+        retryTimeout: 300,
+      },
+    },
+  ],
+})
