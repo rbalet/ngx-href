@@ -1,7 +1,6 @@
 import { enableProdMode, provideZonelessChangeDetection } from '@angular/core'
 import { bootstrapApplication } from '@angular/platform-browser'
 import { provideRouter } from '@angular/router'
-import 'zone.js'
 import { NgxHrefServiceProvider } from '../../ngx-href/src/lib/href.const'
 import { AppComponent } from './app/app.component'
 import { routes } from './app/app.routes'
