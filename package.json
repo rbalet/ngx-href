@@ -1,6 +1,6 @@
 {
   "name": "ngx-href",
-  "version": "20.0.1",
+  "version": "20.0.2",
   "license": "MIT",
   "author": "Raphael Balet",
   "maintainers": [
@@ -50,7 +50,7 @@
     "@angular/compiler-cli": "*",
     "@commitlint/cli": "19.8.1",
     "@commitlint/config-conventional": "19.8.1",
-    "@semantic-release/github": "11.0.5",
+    "@semantic-release/github": "11.0.6",
     "@types/jasmine": "5.1.8",
     "husky": "9.1.7",
     "jasmine-core": "5.8.0",
@@ -60,8 +60,8 @@
     "karma-coverage-istanbul-reporter": "3.0.3",
     "karma-jasmine": "5.1.0",
     "karma-jasmine-html-reporter": "2.1.0",
-    "ng-packagr": "20.2.0",
-    "semantic-release": "24.2.7",
+    "ng-packagr": "20.3.0",
+    "semantic-release": "24.2.8",
     "typescript": "5.8.3"
   }
 }
