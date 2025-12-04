@@ -32,7 +32,7 @@ export class NgxHrefDirective implements OnDestroy {
   $target = signal<string>('')
   $href = signal<string | null>('')
 
-  @HostListener('click', ['$event']) onClick(event: PointerEvent) {
+  @HostListener('click', ['$event']) onClick(event: Event) {
     if (!this.$href() || !this._routeOnClick) return
 
     event.preventDefault()
