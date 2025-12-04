@@ -1,6 +1,6 @@
 {
   "name": "ngx-href",
-  "version": "20.0.2",
+  "version": "21.0.0",
   "license": "MIT",
   "author": {
     "name": "Raphaël Balet",
@@ -28,8 +28,8 @@
     "tslib": "^2.8.1"
   },
   "peerDependencies": {
-    "@angular/common": ">=15.2.0",
-    "@angular/core": ">=15.2.0"
+    "@angular/common": ">=19.0.0",
+    "@angular/core": ">=19.0.0"
   },
   "sideEffects": false
 }
