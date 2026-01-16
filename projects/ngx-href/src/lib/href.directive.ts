@@ -134,7 +134,6 @@ export class NgxHrefDirective implements OnDestroy {
   private _prepareScrollToLink() {
     this._clickListener = (event: PointerEvent) => {
       event.preventDefault()
-
       if (this.$href()) this.#ngxHrefService.scrollTo(this.$href()?.substring(1))
     }
 

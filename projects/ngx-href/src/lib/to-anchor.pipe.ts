@@ -63,7 +63,7 @@ export class ToAnchorPipe implements PipeTransform {
       anchor = anchor.split(char).join('')
     })
 
-    if (emit) this.#ngxHrefService.loadedAnchor$.next(anchor)
+    if (emit) this.#ngxHrefService.$loadedAnchor.set(anchor)
 
     return anchor
   }
